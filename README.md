@@ -52,7 +52,7 @@ including `xjs.h`
 `XJS_CFLAG_DISABLE_MEM_FALLBACK` - By default the parser will fallback
 to using libc `malloc/free` to allocate storage when the `XJSMemCB`
 parameter to parse is `NULL`. If defined a memory manager must be
-provided to parse.
+provided to parse and `malloc/free/realloc` will **NOT** be linked.
 
 `XJS_CFLAG_ENABLE_BLOCKS` - if defined the parser will handle Blocks as 
 described above otherwise blocks in JSON will generate an error.
@@ -62,8 +62,8 @@ ascii english descriptions for Node Types and Error Codes.
 
 `XJS_CFLAG_DISABLE_ARRAY_POS_AS_NAME` - **xjs** sends the ordinal number
 of array elements as ascii text in the name field for all array elements.
-If defined the name field will be ```NULL``` for array elements. 
-*Otherwise `snprintf` from libc will be linked.*
+If defined the name field will be ```NULL``` for array elements and 
+`snprintf` from libc will **NOT** be linked.
 
 `XJS_CFLAG_DISABLE_SIZE_T` - if defined the API will not use `size_t`
 from libc, instead it will use `unsigned long`.
