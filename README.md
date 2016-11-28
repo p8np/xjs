@@ -5,7 +5,7 @@ A simple JSON parser for C/C++
 a callback function. Input can be ASCII or UTF-8
 
 **xjs** does not provide any hierarchical structure to the stream.
-The caller can assosicate memory with parsed objects and arrays within
+The caller can associate memory with parsed objects and arrays within
 the callback. These addressed will passed to the callback for all the
 items parsed while the object or array is active. This feature facilitates
 creating a hierarchical representation of the nodes parsed.
