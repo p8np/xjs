@@ -50,7 +50,7 @@ including `xjs.h`
 **xjs** watches for two compiler flags:
 
 `XJS_CFLAG_DISABLE_MEM_FALLBACK` - By default the parser will fallback
-to using libc `malloc/free` to allocate storage when the XJSMemCB
+to using libc `malloc/free` to allocate storage when the `XJSMemCB`
 parameter to parse is `NULL`. If defined a memory manager must be
 provided to parse.
 
