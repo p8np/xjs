@@ -13,6 +13,23 @@
 #include <ctype.h>
 
 /* ---------------------------------------------------------------------------
+** A Static Memory Manager. It will fail if the allocations are too small,
+** but if the nature of the JSON is known upfront, this approach will improve
+** performance. 
+** ---------------------------------------------------------------------------
+*/
+#define NAME_BUF_SIZE  256 // maximum name field length
+#define VALUE_BUF_SIZE 512 // maximum value field length
+void *memcb_static(XJSMemReq action, XJSType context, void *prev, XJSSize size, XJSSize *actsz)
+{ static char s_name[NAME_BUF_SIZE], s_value[VALUE_BUF_SIZE];
+  if (action==XJS_free) return NULL;   // nothing to free.
+  if (prev) { *actsz=0; return NULL; } // no reallocation allowed.
+  if (context==XJS_name) { *actsz=NAME_BUF_SIZE; return s_name; } // require two buffers for object members (name:value)
+  *actsz=VALUE_BUF_SIZE; 
+  return s_value;
+}
+
+/* ---------------------------------------------------------------------------
 ** Input will read TEST_INPUT_BUFFER_SIZE bytes from the file passed as arg.
 ** The parser will request the next buffer when it reaches the null terminator
 ** ---------------------------------------------------------------------------
@@ -52,7 +69,7 @@ int main(int argc, char *argv[])
   if (argc<2) { printf("%s <json-file>\n", argv[0]); return 1; }
   FILE *f=fopen(argv[1], "rb");
   if (f==NULL) { printf("%s is not a valid file\n", argv[1]); return 1; }
-  int r=xjs_parse(NULL, nodecb, NULL, inpcb, (void*)f, NULL, &err);
+  int r=xjs_parse(NULL, nodecb, NULL, inpcb, (void*)f, memcb_static, &err);
   if (r==XJS_OK) printf("SUCCESS.\n");
   else 
   { // if there was an error, truncate the input from the error position (more usefule)
