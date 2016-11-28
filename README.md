@@ -49,10 +49,10 @@ including `xjs.h`
 
 **xjs** watches for two compiler flags:
 
-`XJS_CFLAG_DISABLE_MEM_FALLBACK` - if defined the parser will NOT use
-libc `malloc/free` to allocate storage, and `XJSMemCB` must be passed to
-parse. Otherwise passing NULL to xjs_parse for `XJSMemCB` will default to 
-`malloc/free`.
+`XJS_CFLAG_DISABLE_MEM_FALLBACK` - By default the parser will fallback
+to using libc `malloc/free` to allocate storage when the XJSMemCB
+parameter to parse is `NULL`. If defined a memory manager must be
+provided to parse.
 
 `XJS_CFLAG_ENABLE_BLOCKS` - if defined the parser will handle Blocks as 
 described above otherwise blocks in JSON will generate an error.
