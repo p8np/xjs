@@ -2,7 +2,36 @@
 A simple JSON parser for C/C++
 
 **xjs** parses a JSON stream and signals the caller of items parsed via
-a callback function. Input can be ASCII or UTF-8
+a callback function. 
+Input can be ASCII or UTF-8
+
+# Usage
+
+Parsing JSON is accomplished with a single call to `xjs_parse`. The function
+takes 7 parameters including 3 callback functions:
+
+1. `const char *json` - (optional) can provide the entire json to be parsed,
+the beginning json to be parsed and the input callback will provide the rest, 
+or `NULL` and the input callback will provide all the input. 
+
+2. `XJSNodeCB` - gets called once for every item parsed, and twice for
+containers, once when the container is opened, and again when it is closed. 
+
+3. `void *node_arg` - to be passed to the `XJSNodeCB` function.
+
+4. `XJSInputCB` - (optional) gets called when the parser encounters `0` byte
+(null terminator) in the input before the end of the highest level
+object or array. This callback allows the caller to provide the parser
+with more input. 
+
+5. `void *inp_arg` - to be passed to the `XJSInputCB` function.
+
+6. `XJSMemCB` - (optional) gets called when the parser needs storage for an
+element. If `NULL` the parser will fallback to `malloc/free`. You can
+use the callback to implement static minimal storage (see example).
+
+7. `const char **errpos` - sets `errpos` to the position in the input where
+an error occurred.
 
 **xjs** does not provide any hierarchical structure to the stream.
 The caller can associate memory with parsed objects and arrays within
