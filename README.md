@@ -63,7 +63,7 @@ ascii english descriptions for Node Types and Error Codes.
 `XJS_CFLAG_DISABLE_ARRAY_POS_AS_NAME` - **xjs** sends the ordinal number
 of array elements as ascii text in the name field for all array elements.
 If defined the name field will be ```NULL``` for array elements and 
-`snprintf` from libc will **NOT** be linked.
+`snprintf` will **NOT** be linked.
 
 `XJS_CFLAG_DISABLE_SIZE_T` - if defined the API will not use `size_t`
 from libc, instead it will use `unsigned long`.
