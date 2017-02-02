@@ -76,7 +76,7 @@ including `xjs.h`
 
 ## Compile-time Preprocessor Flags
 
-**xjs** watches for two compiler flags:
+**xjs** watches for the following compiler flags:
 
 `XJS_CFLAG_DISABLE_MEM_FALLBACK` - By default the parser will fallback
 to using libc `malloc/free` to allocate storage when the `XJSMemCB`
